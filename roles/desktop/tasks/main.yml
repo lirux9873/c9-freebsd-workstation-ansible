@@ -19,8 +19,8 @@
         accept_hostkey: yes
         clone: yes
         update: yes
-        become: yes
-        become_user: "{{ workstation_user }}"
+      become: yes
+      become_user: "{{ workstation_user }}"
   when: desktop_environment  == 'dwm'
 
 - name: Install desktop packages
