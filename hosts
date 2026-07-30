@@ -7,7 +7,6 @@ localhost
 [virtual]
 # Add localhost here instead of [physical] when running in a VM.
 localhost
-freebsd_vbox
 
 [physical]
 # Example:
