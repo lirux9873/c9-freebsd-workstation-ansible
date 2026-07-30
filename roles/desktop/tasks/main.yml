@@ -3,6 +3,23 @@
   ansible.builtin.include_vars:
     file: "{{ desktop_environment }}.yml"
 
+- name: Manage custom dwm installation directory
+  block:
+    - name: Ensure the ~/src directory exists
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/src"
+        state: directory
+        mode: '0755'
+
+    - name: Clone dwm-flexipatch repository
+      ansible.builtin.git:
+        repo: 'https://github.com'
+        dest: "{{ ansible_env.HOME }}/src/dwm-flexipatch"
+        version: master
+        clone: yes
+        update: yes
+  when: desktop_environment  == 'dwm'
+
 - name: Install desktop packages
   ansible.builtin.package:
     name: "{{ desktop_packages }}"

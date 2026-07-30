@@ -14,6 +14,9 @@
 - name: Configure the workstation account
   ansible.builtin.import_tasks: users.yml
 
+- name: Configure the sudo policy for wheel
+  ansible.builtin.import_tasks: sudo.yml
+
 - name: Configure baseline rc settings
   ansible.builtin.import_tasks: sysrc.yml
 

@@ -1,0 +1,9 @@
+---
+- name: Install doas policy for wheel
+  ansible.builtin.template:
+    src: wheel-doas.j2
+    dest: /usr/local/etc/doas.d/c9-workstation
+    owner: root
+    group: wheel
+    mode: "0440"
+    validate: doas -C /etc/doas.conf

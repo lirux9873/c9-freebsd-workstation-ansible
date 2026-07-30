@@ -19,6 +19,10 @@ fi
 env ASSUME_ALWAYS_YES=yes pkg bootstrap -f
 pkg install -y ca_root_nss git sysutils/py-ansible-core sudo
 
+# install the community.general collection to support the ansible.builtin.xx modules
+ansible-galaxy collection install community.general
+
+# create the working directory if it does not exist
 install -d -o root -g wheel -m 0755 "${WORK_DIRECTORY}"
 
 exec /usr/local/bin/ansible-pull \
