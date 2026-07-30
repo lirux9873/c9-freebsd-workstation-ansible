@@ -7,15 +7,16 @@
   block:
     - name: Ensure the ~/src directory exists
       ansible.builtin.file:
-        path: "{{ ansible_env.HOME }}/src"
+        path: "{{ workstation_home }}/src"
         state: directory
         mode: '0755'
 
     - name: Clone dwm-flexipatch repository
       ansible.builtin.git:
-        repo: 'https://github.com'
-        dest: "{{ ansible_env.HOME }}/src/dwm-flexipatch"
+        repo: 'git@github.com:lirux9873/dwm-flexipatch.git'
+        dest: "{{ workstation_home }}/src/dwm-flexipatch"
         version: master
+        accept_hostkey: yes
         clone: yes
         update: yes
   when: desktop_environment  == 'dwm'
