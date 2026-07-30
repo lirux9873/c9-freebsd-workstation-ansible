@@ -2,7 +2,7 @@
 
 set -eu
 
-REPOSITORY_URL="${REPOSITORY_URL:-https://github.com/lirux9873/c9-freebsd-workstation-ansible.git}"
+REPOSITORY_URL="${REPOSITORY_URL:-https://github.com/lirux9873/c9-freebsd-workstation-ansible_v2.git}"
 REPOSITORY_BRANCH="${REPOSITORY_BRANCH:-main}"
 WORK_DIRECTORY="${WORK_DIRECTORY:-/var/db/ansible-pull/c9-freebsd-workstation}"
 
