@@ -1,0 +1,5 @@
+---
+# BEGIN OPERATOR-MANAGED HOST SELECTION
+hardware_profile: virtualbox
+desktop_environment: dwm
+# END OPERATOR-MANAGED HOST SELECTION

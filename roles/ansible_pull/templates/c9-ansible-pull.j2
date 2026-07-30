@@ -1,0 +1,8 @@
+#!/bin/sh
+# BEGIN ANSIBLE MANAGED FILE: /usr/local/sbin/c9-ansible-pull
+
+set -eu
+
+exec /usr/bin/lockf -s -t 0 "{{ ansible_pull_lock_file }}"     /usr/local/bin/ansible-pull     --clean     --checkout "{{ project_repository_branch }}"     --directory "{{ ansible_pull_work_directory }}"     --inventory "{{ ansible_pull_work_directory }}/hosts"     --url "{{ project_repository_url }}"     local.yml
+
+# END ANSIBLE MANAGED FILE: /usr/local/sbin/c9-ansible-pull

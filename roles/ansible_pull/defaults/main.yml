@@ -1,0 +1,8 @@
+---
+ansible_pull_enabled: false
+ansible_pull_schedule:
+  minute: "17"
+  hour: "*/2"
+ansible_pull_work_directory: /var/db/ansible-pull/c9-freebsd-workstation
+ansible_pull_log_file: /var/log/ansible-pull.log
+ansible_pull_lock_file: /var/run/c9-ansible-pull.lock

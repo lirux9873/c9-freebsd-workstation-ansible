@@ -1,0 +1,36 @@
+---
+- name: Read effective kld_list
+  ansible.builtin.command:
+    argv:
+      - /usr/sbin/sysrc
+      - -n
+      - kld_list
+  register: hardware_current_kld_list
+  changed_when: false
+  failed_when: false
+  when: hardware_kernel_modules | length > 0
+
+- name: Build merged kld_list
+  ansible.builtin.set_fact:
+    hardware_merged_kld_list: >-
+      {{
+        (
+          (hardware_current_kld_list.stdout.split()
+           if hardware_current_kld_list.stdout | length > 0 else [])
+          + hardware_kernel_modules
+        ) | unique | join(' ')
+      }}
+  when: hardware_kernel_modules | length > 0
+
+- name: Manage kernel module rc.conf.local block
+  ansible.builtin.blockinfile:
+    path: "{{ freebsd_rc_conf_path }}"
+    create: true
+    owner: root
+    group: wheel
+    mode: "0644"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: c9-kernel-modules"
+    block: |
+      # Boot-time kernel modules required by {{ hardware_profile_name }}.
+      kld_list="{{ hardware_merged_kld_list }}"
+  when: hardware_kernel_modules | length > 0

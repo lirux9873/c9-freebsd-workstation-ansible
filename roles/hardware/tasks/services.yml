@@ -1,0 +1,21 @@
+---
+- name: Manage hardware rc.conf.local block
+  ansible.builtin.blockinfile:
+    path: "{{ freebsd_rc_conf_path }}"
+    create: true
+    owner: root
+    group: wheel
+    mode: "0644"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: c9-hardware"
+    block: |
+      # {{ hardware_profile_name }}
+      {% for setting in hardware_sysrc_settings | dictsort %}
+      {{ setting.0 }}="{{ setting.1 }}"
+      {% endfor %}
+  when: hardware_sysrc_settings | length > 0
+
+- name: Start hardware services
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: started
+  loop: "{{ hardware_services }}"

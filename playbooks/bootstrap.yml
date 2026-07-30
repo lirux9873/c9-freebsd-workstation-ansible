@@ -1,0 +1,33 @@
+---
+- name: Validate the FreeBSD bootstrap environment
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: Verify FreeBSD 15 or newer
+      ansible.builtin.assert:
+        that:
+          - ansible_facts["system"] == "FreeBSD"
+          - ansible_facts["distribution_major_version"] | int >= 15
+
+    - name: Verify required executable paths
+      ansible.builtin.stat:
+        path: "{{ item }}"
+      loop:
+        - /usr/sbin/pkg
+        - /usr/sbin/sysrc
+        - /usr/sbin/service
+        - /usr/sbin/pw
+        - /usr/bin/lockf
+        - /usr/local/bin/ansible-pull
+      register: bootstrap_executables
+
+    - name: Assert required executables exist
+      ansible.builtin.assert:
+        that:
+          - item.stat.exists
+          - item.stat.executable
+        fail_msg: "Required executable is missing: {{ item.item }}"
+      loop: "{{ bootstrap_executables.results }}"

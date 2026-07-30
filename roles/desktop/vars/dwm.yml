@@ -1,0 +1,18 @@
+---
+desktop_start_command: startx
+
+desktop_packages:
+  - dmenu
+  - dunst
+  - dwm
+  - feh
+  - picom
+  - sterm
+  - xorg
+
+desktop_config_directories:
+  - .config/dunst
+  - .config/picom
+
+desktop_services: []
+desktop_sysrc_settings: {}

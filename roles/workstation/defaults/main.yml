@@ -1,0 +1,6 @@
+---
+workstation_packages: []
+workstation_services: []
+workstation_sysrc_settings: {}
+workstation_groups: []
+workstation_create_xdg_directories: true

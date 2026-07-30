@@ -1,0 +1,40 @@
+---
+- name: Install Sway configuration
+  ansible.builtin.template:
+    src: sway-config.j2
+    dest: "{{ workstation_home }}/.config/sway/config"
+    owner: "{{ workstation_user }}"
+    group: "{{ workstation_user }}"
+    mode: "0644"
+
+- name: Install Waybar configuration
+  ansible.builtin.template:
+    src: waybar-config.jsonc.j2
+    dest: "{{ workstation_home }}/.config/waybar/config"
+    owner: "{{ workstation_user }}"
+    group: "{{ workstation_user }}"
+    mode: "0644"
+
+- name: Install Foot configuration
+  ansible.builtin.template:
+    src: foot.ini.j2
+    dest: "{{ workstation_home }}/.config/foot/foot.ini"
+    owner: "{{ workstation_user }}"
+    group: "{{ workstation_user }}"
+    mode: "0644"
+
+- name: Install Mako configuration
+  ansible.builtin.template:
+    src: mako-config.j2
+    dest: "{{ workstation_home }}/.config/mako/config"
+    owner: "{{ workstation_user }}"
+    group: "{{ workstation_user }}"
+    mode: "0644"
+
+- name: Install Sway startup wrapper
+  ansible.builtin.template:
+    src: start-sway.j2
+    dest: "{{ workstation_home }}/.local/bin/start-sway"
+    owner: "{{ workstation_user }}"
+    group: "{{ workstation_user }}"
+    mode: "0755"

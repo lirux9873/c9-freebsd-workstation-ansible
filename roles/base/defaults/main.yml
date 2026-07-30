@@ -1,0 +1,5 @@
+---
+base_packages: []
+base_services: []
+base_sysrc_settings: {}
+freebsd_upgrade_packages: false

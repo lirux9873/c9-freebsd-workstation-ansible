@@ -1,0 +1,24 @@
+---
+desktop_start_command: start-sway
+
+desktop_packages:
+  - bemenu
+  - foot
+  - grim
+  - mako
+  - slurp
+  - sway
+  - swayidle
+  - swaylock
+  - waybar
+  - wl-clipboard
+  - xwayland
+
+desktop_config_directories:
+  - .config/sway
+  - .config/waybar
+  - .config/foot
+  - .config/mako
+
+desktop_services: []
+desktop_sysrc_settings: {}

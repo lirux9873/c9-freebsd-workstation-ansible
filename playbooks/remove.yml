@@ -1,0 +1,24 @@
+---
+- name: Remove scheduled Ansible Pull integration
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Remove Ansible Pull cron job
+      ansible.builtin.cron:
+        name: c9 FreeBSD workstation ansible-pull
+        user: root
+        state: absent
+
+    - name: Remove Ansible Pull wrapper
+      ansible.builtin.file:
+        path: /usr/local/sbin/c9-ansible-pull
+        state: absent
+
+    - name: Preserve workstation configuration
+      ansible.builtin.debug:
+        msg: >-
+          Packages, rc.conf settings, groups, and desktop files are preserved.
+          They require explicit review before removal.

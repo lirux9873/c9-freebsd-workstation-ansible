@@ -1,0 +1,13 @@
+---
+galaxy_info:
+  role_name: base
+  author: Daniel Peyer
+  description: FreeBSD package repository, baseline packages, sudo, and base services.
+  license: MIT
+  min_ansible_version: "2.16"
+  platforms:
+    - name: FreeBSD
+      versions:
+        - all
+
+dependencies: []

@@ -1,0 +1,21 @@
+#!/bin/sh
+# BEGIN ANSIBLE MANAGED FILE: start-sway
+# FreeBSD Sway launcher using seatd and a private runtime directory.
+
+set -eu
+
+uid="$(id -u)"
+runtime_dir="${XDG_RUNTIME_DIR:-/tmp/xdg-runtime-${uid}}"
+
+if [ ! -d "${runtime_dir}" ]; then
+    install -d -m 0700 "${runtime_dir}"
+fi
+
+export XDG_RUNTIME_DIR="${runtime_dir}"
+export LIBSEAT_BACKEND=seatd
+export XKB_DEFAULT_LAYOUT=ch
+export XKB_DEFAULT_MODEL=pc105
+
+exec /usr/local/bin/dbus-run-session /usr/local/bin/sway
+
+# END ANSIBLE MANAGED FILE: start-sway

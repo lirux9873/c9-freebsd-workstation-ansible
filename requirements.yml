@@ -1,0 +1,4 @@
+---
+# This project intentionally uses ansible-core modules only.
+collections: []
+roles: []

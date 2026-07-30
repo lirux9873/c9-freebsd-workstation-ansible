@@ -1,0 +1,13 @@
+---
+- name: Ensure workstation groups exist
+  ansible.builtin.group:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ workstation_groups }}"
+
+- name: Add workstation user to workstation groups
+  ansible.builtin.user:
+    name: "{{ workstation_user }}"
+    groups: "{{ workstation_groups }}"
+    append: true
+  when: workstation_groups | length > 0

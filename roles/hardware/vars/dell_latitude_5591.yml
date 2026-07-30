@@ -1,0 +1,15 @@
+---
+hardware_profile_name: Dell Latitude 5591
+hardware_kind: physical
+
+hardware_packages:
+  - drm-kmod
+
+hardware_kernel_modules:
+  - i915kms
+
+hardware_services: []
+
+hardware_sysrc_settings: {}
+
+hardware_loader_settings: {}

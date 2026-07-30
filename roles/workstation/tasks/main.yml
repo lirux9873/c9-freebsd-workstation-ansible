@@ -1,0 +1,15 @@
+---
+- name: Install common workstation packages
+  ansible.builtin.package:
+    name: "{{ workstation_packages }}"
+    state: present
+  when: workstation_packages | length > 0
+
+- name: Configure workstation groups
+  ansible.builtin.import_tasks: groups.yml
+
+- name: Configure workstation services
+  ansible.builtin.import_tasks: services.yml
+
+- name: Configure workstation user directories
+  ansible.builtin.import_tasks: user_files.yml

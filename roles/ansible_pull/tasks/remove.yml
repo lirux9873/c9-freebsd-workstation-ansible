@@ -1,0 +1,11 @@
+---
+- name: Remove Ansible Pull cron job
+  ansible.builtin.cron:
+    name: c9 FreeBSD workstation ansible-pull
+    user: root
+    state: absent
+
+- name: Remove Ansible Pull wrapper
+  ansible.builtin.file:
+    path: /usr/local/sbin/c9-ansible-pull
+    state: absent

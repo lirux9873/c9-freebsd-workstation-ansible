@@ -1,0 +1,19 @@
+---
+hardware_profile_name: Oracle VirtualBox guest
+hardware_kind: virtual
+
+hardware_packages:
+  - virtualbox-ose-additions
+
+hardware_kernel_modules: []
+
+hardware_services:
+  - vboxguest
+  - vboxservice
+
+hardware_sysrc_settings:
+  vboxguest_enable: "YES"
+  vboxservice_enable: "YES"
+
+hardware_loader_settings:
+  hw.efi.poweroff: "0"

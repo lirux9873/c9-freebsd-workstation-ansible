@@ -1,0 +1,32 @@
+---
+- name: Update FreeBSD packages
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: Verify FreeBSD
+      ansible.builtin.assert:
+        that:
+          - ansible_facts["system"] == "FreeBSD"
+
+    - name: Refresh package repository metadata
+      ansible.builtin.command:
+        argv:
+          - /usr/sbin/pkg
+          - update
+          - -f
+      register: pkg_update
+      changed_when: >-
+        'repository update completed' in pkg_update.stdout | lower
+
+    - name: Upgrade installed packages
+      ansible.builtin.command:
+        argv:
+          - /usr/sbin/pkg
+          - upgrade
+          - -y
+      register: pkg_upgrade
+      changed_when: >-
+        'your packages are up to date' not in pkg_upgrade.stdout | lower

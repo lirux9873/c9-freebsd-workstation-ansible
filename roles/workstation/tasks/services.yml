@@ -1,0 +1,21 @@
+---
+- name: Manage workstation rc.conf.local block
+  ansible.builtin.blockinfile:
+    path: "{{ freebsd_rc_conf_path }}"
+    create: true
+    owner: root
+    group: wheel
+    mode: "0644"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: c9-workstation"
+    block: |
+      # Common workstation services.
+      {% for setting in workstation_sysrc_settings | dictsort %}
+      {{ setting.0 }}="{{ setting.1 }}"
+      {% endfor %}
+  when: workstation_sysrc_settings | length > 0
+
+- name: Start common workstation services
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: started
+  loop: "{{ workstation_services }}"

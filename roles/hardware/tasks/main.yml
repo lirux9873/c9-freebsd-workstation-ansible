@@ -1,0 +1,29 @@
+---
+- name: Load selected hardware profile
+  ansible.builtin.include_vars:
+    file: "{{ hardware_profile }}.yml"
+
+- name: Verify hardware profile data
+  ansible.builtin.assert:
+    that:
+      - hardware_kind in ["physical", "virtual"]
+      - hardware_packages is sequence
+      - hardware_kernel_modules is sequence
+      - hardware_services is sequence
+      - hardware_sysrc_settings is mapping
+      - hardware_loader_settings is mapping
+
+- name: Install hardware packages
+  ansible.builtin.package:
+    name: "{{ hardware_packages }}"
+    state: present
+  when: hardware_packages | length > 0
+
+- name: Configure hardware services
+  ansible.builtin.import_tasks: services.yml
+
+- name: Configure boot-time kernel modules
+  ansible.builtin.import_tasks: kernel_modules.yml
+
+- name: Configure profile-owned loader settings
+  ansible.builtin.import_tasks: loader_conf.yml

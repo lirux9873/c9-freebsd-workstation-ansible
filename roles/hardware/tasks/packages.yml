@@ -1,0 +1,4 @@
+---
+- name: Hardware package placeholder
+  ansible.builtin.debug:
+    msg: "Would manage hardware packages: {{ hardware_packages }}"

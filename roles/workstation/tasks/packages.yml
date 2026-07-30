@@ -1,0 +1,4 @@
+---
+- name: Workstation package placeholder
+  ansible.builtin.debug:
+    msg: "Would manage workstation packages: {{ workstation_packages }}"

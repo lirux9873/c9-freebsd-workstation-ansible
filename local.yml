@@ -1,0 +1,77 @@
+---
+- name: Configure the local FreeBSD workstation
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  become: true
+
+  pre_tasks:
+    - name: Load machine-specific variables
+      ansible.builtin.include_vars:
+        file: "{{ lookup('ansible.builtin.first_found', host_var_candidates) }}"
+      vars:
+        host_var_candidates:
+          files:
+            - "{{ ansible_facts['hostname'] }}.yml"
+            - localhost.yml
+          paths:
+            - host_vars
+      tags:
+        - always
+
+    - name: Verify this project is running on FreeBSD
+      ansible.builtin.assert:
+        that:
+          - ansible_facts["system"] == "FreeBSD"
+          - ansible_facts["distribution"] == "FreeBSD"
+          - ansible_facts["distribution_major_version"] | int >= 15
+        fail_msg: >-
+          This project supports FreeBSD 15.x or newer only.
+      tags:
+        - always
+
+    - name: Verify required workstation variables
+      ansible.builtin.assert:
+        that:
+          - workstation_user | length > 0
+          - workstation_home | length > 1
+          - hardware_profile in supported_hardware_profiles
+          - desktop_environment in supported_desktops
+          - freebsd_package_branch in ["quarterly", "latest"]
+        fail_msg: >-
+          Check host_vars/localhost.yml and group_vars/all.yml.
+      tags:
+        - always
+
+  roles:
+    - role: base
+      tags:
+        - base
+
+    - role: hardware
+      tags:
+        - hardware
+
+    - role: workstation
+      tags:
+        - workstation
+
+    - role: desktop
+      tags:
+        - desktop
+
+    - role: ansible_pull
+      tags:
+        - ansible_pull
+
+  post_tasks:
+    - name: Display completion information
+      ansible.builtin.debug:
+        msg:
+          - "FreeBSD workstation configuration completed."
+          - "Selected hardware: {{ hardware_profile }}"
+          - "Selected desktop: {{ desktop_environment }}"
+          - "Reboot when kernel modules or group membership changed."
+          - "After logging in, run: {{ desktop_start_command }}"
+      tags:
+        - always

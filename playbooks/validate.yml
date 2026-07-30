@@ -1,0 +1,54 @@
+---
+- name: Validate workstation configuration
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  become: false
+
+  pre_tasks:
+    - name: Load machine-specific variables
+      ansible.builtin.include_vars:
+        file: "{{ lookup('ansible.builtin.first_found', host_var_candidates) }}"
+      vars:
+        host_var_candidates:
+          files:
+            - "{{ ansible_facts['hostname'] }}.yml"
+            - localhost.yml
+          paths:
+            - ../host_vars
+
+  tasks:
+    - name: Verify FreeBSD platform
+      ansible.builtin.assert:
+        that:
+          - ansible_facts["system"] == "FreeBSD"
+          - ansible_facts["distribution_major_version"] | int >= 15
+        fail_msg: "FreeBSD 15.x or newer is required."
+
+    - name: Verify target account exists
+      ansible.builtin.getent:
+        database: passwd
+        key: "{{ workstation_user }}"
+
+    - name: Verify target home directory
+      ansible.builtin.assert:
+        that:
+          - ansible_facts["getent_passwd"][workstation_user][4] == workstation_home
+        fail_msg: >-
+          workstation_home does not match the passwd database.
+
+    - name: Verify selections
+      ansible.builtin.assert:
+        that:
+          - hardware_profile in supported_hardware_profiles
+          - desktop_environment in supported_desktops
+          - freebsd_package_branch in ["quarterly", "latest"]
+
+    - name: Display selected configuration
+      ansible.builtin.debug:
+        msg:
+          - "FreeBSD: {{ ansible_facts['distribution_version'] }}"
+          - "User: {{ workstation_user }}"
+          - "Hardware: {{ hardware_profile }}"
+          - "Desktop: {{ desktop_environment }}"
+          - "Package branch: {{ freebsd_package_branch }}"

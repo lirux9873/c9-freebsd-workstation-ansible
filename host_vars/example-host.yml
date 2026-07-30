@@ -1,0 +1,18 @@
+---
+# Copy this file to host_vars/<actual-hostname>.yml.
+#
+# Example command:
+#
+#   cp host_vars/example-host.yml host_vars/"$(hostname -s)".yml
+
+hardware_profile: example
+desktop_environment: sway
+
+hardware_packages: []
+hardware_kernel_modules: []
+hardware_services: []
+hardware_sysrc_settings: {}
+
+desktop_packages: []
+desktop_services: []
+desktop_sysrc_settings: {}

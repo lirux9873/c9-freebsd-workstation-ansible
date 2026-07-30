@@ -1,0 +1,37 @@
+---
+- name: Create custom package repository directory
+  ansible.builtin.file:
+    path: "{{ freebsd_pkg_repo_directory }}"
+    state: directory
+    owner: root
+    group: wheel
+    mode: "0755"
+
+- name: Configure FreeBSD package repository branch
+  ansible.builtin.template:
+    src: FreeBSD.conf.j2
+    dest: "{{ freebsd_pkg_repo_file }}"
+    owner: root
+    group: wheel
+    mode: "0644"
+  register: freebsd_repo_configuration
+
+- name: Refresh package metadata after repository change
+  ansible.builtin.command:
+    argv:
+      - /usr/sbin/pkg
+      - update
+      - -f
+  when: freebsd_repo_configuration.changed
+  changed_when: true
+
+- name: Upgrade installed packages
+  ansible.builtin.command:
+    argv:
+      - /usr/sbin/pkg
+      - upgrade
+      - -y
+  register: freebsd_pkg_upgrade
+  changed_when: >-
+    'your packages are up to date' not in freebsd_pkg_upgrade.stdout | lower
+  when: freebsd_upgrade_packages | bool

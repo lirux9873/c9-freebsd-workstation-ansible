@@ -1,0 +1,21 @@
+---
+- name: Load selected desktop variables
+  ansible.builtin.include_vars:
+    file: "{{ desktop_environment }}.yml"
+
+- name: Install desktop packages
+  ansible.builtin.package:
+    name: "{{ desktop_packages }}"
+    state: present
+
+- name: Create desktop configuration directories
+  ansible.builtin.file:
+    path: "{{ workstation_home }}/{{ item }}"
+    state: directory
+    owner: "{{ workstation_user }}"
+    group: "{{ workstation_user }}"
+    mode: "0755"
+  loop: "{{ desktop_config_directories }}"
+
+- name: Configure selected desktop
+  ansible.builtin.include_tasks: "{{ desktop_environment }}.yml"

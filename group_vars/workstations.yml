@@ -1,0 +1,21 @@
+---
+workstation_packages:
+  - bash
+  - curl
+  - dbus
+  - nano
+  - seatd
+  - xdg-user-dirs
+
+workstation_services:
+  - dbus
+  - seatd
+
+workstation_sysrc_settings:
+  dbus_enable: "YES"
+  seatd_enable: "YES"
+
+workstation_groups:
+  - video
+
+workstation_create_xdg_directories: true

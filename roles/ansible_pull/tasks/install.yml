@@ -1,0 +1,36 @@
+---
+- name: Create Ansible Pull working directory
+  ansible.builtin.file:
+    path: "{{ ansible_pull_work_directory }}"
+    state: directory
+    owner: root
+    group: wheel
+    mode: "0755"
+
+- name: Create Ansible Pull log file
+  ansible.builtin.file:
+    path: "{{ ansible_pull_log_file }}"
+    state: touch
+    owner: root
+    group: wheel
+    mode: "0640"
+    modification_time: preserve
+    access_time: preserve
+
+- name: Install Ansible Pull wrapper
+  ansible.builtin.template:
+    src: c9-ansible-pull.j2
+    dest: /usr/local/sbin/c9-ansible-pull
+    owner: root
+    group: wheel
+    mode: "0755"
+
+- name: Schedule Ansible Pull with cron
+  ansible.builtin.cron:
+    name: c9 FreeBSD workstation ansible-pull
+    user: root
+    minute: "{{ ansible_pull_schedule.minute }}"
+    hour: "{{ ansible_pull_schedule.hour }}"
+    job: >-
+      /usr/local/sbin/c9-ansible-pull
+      >> {{ ansible_pull_log_file }} 2>&1

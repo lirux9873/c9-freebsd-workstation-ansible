@@ -1,0 +1,15 @@
+---
+- name: Manage baseline rc.conf.local settings
+  ansible.builtin.blockinfile:
+    path: "{{ freebsd_rc_conf_path }}"
+    create: true
+    owner: root
+    group: wheel
+    mode: "0644"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: c9-base"
+    block: |
+      # Baseline settings for c9-freebsd-workstation-ansible.
+      {% for setting in base_sysrc_settings | dictsort %}
+      {{ setting.0 }}="{{ setting.1 }}"
+      {% endfor %}
+  when: base_sysrc_settings | length > 0

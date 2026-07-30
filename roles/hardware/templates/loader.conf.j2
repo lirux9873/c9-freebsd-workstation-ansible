@@ -1,0 +1,9 @@
+# BEGIN ANSIBLE MANAGED FILE: loader.conf.d/{{ hardware_profile }}.conf
+# Hardware profile: {{ hardware_profile_name }}
+# Manual changes will be overwritten.
+
+{% for key, value in hardware_loader_settings | dictsort %}
+{{ key }}="{{ value }}"
+{% endfor %}
+
+# END ANSIBLE MANAGED FILE: loader.conf.d/{{ hardware_profile }}.conf

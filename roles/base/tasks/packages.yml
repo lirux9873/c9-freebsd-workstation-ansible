@@ -1,0 +1,6 @@
+---
+- name: Install baseline packages
+  ansible.builtin.package:
+    name: "{{ base_packages }}"
+    state: present
+  when: base_packages | length > 0

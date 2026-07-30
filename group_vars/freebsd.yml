@@ -1,0 +1,5 @@
+---
+freebsd_rc_conf_path: /etc/rc.conf.local
+freebsd_pkg_repo_directory: /usr/local/etc/pkg/repos
+freebsd_pkg_repo_file: /usr/local/etc/pkg/repos/FreeBSD.conf
+freebsd_loader_conf_path: /boot/loader.conf

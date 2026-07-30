@@ -1,0 +1,29 @@
+---
+- name: Verify workstation account exists
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ workstation_user }}"
+
+- name: Verify configured home directory
+  ansible.builtin.assert:
+    that:
+      - ansible_facts["getent_passwd"][workstation_user][4] == workstation_home
+    fail_msg: >-
+      The configured workstation_home does not match the FreeBSD passwd
+      database for {{ workstation_user }}.
+
+- name: Add workstation user to wheel
+  ansible.builtin.user:
+    name: "{{ workstation_user }}"
+    groups:
+      - wheel
+    append: true
+
+- name: Install sudo policy for wheel
+  ansible.builtin.template:
+    src: wheel-sudoers.j2
+    dest: /usr/local/etc/sudoers.d/c9-workstation
+    owner: root
+    group: wheel
+    mode: "0440"
+    validate: /usr/local/sbin/visudo -cf %s

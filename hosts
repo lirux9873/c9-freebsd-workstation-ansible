@@ -1,0 +1,13 @@
+[workstations]
+localhost ansible_connection=local
+
+[freebsd]
+localhost
+
+[virtual]
+# Add localhost here instead of [physical] when running in a VM.
+localhost
+
+[physical]
+# Example:
+# localhost

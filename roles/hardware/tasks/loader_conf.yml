@@ -1,0 +1,24 @@
+---
+- name: Create loader.conf.d directory
+  ansible.builtin.file:
+    path: /boot/loader.conf.d
+    state: directory
+    owner: root
+    group: wheel
+    mode: "0755"
+  when: hardware_loader_settings | length > 0
+
+- name: Install loader settings for selected hardware profile
+  ansible.builtin.template:
+    src: loader.conf.j2
+    dest: "/boot/loader.conf.d/{{ hardware_profile }}.conf"
+    owner: root
+    group: wheel
+    mode: "0644"
+  when: hardware_loader_settings | length > 0
+
+- name: Remove empty loader settings file for selected hardware profile
+  ansible.builtin.file:
+    path: "/boot/loader.conf.d/{{ hardware_profile }}.conf"
+    state: absent
+  when: hardware_loader_settings | length == 0

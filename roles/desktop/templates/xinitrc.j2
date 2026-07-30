@@ -1,0 +1,10 @@
+#!/bin/sh
+# BEGIN ANSIBLE MANAGED FILE: .xinitrc
+
+export LANG="${LANG:-en_US.UTF-8}"
+
+picom --config "{{ workstation_home }}/.config/picom/picom.conf" &
+dunst &
+exec dwm
+
+# END ANSIBLE MANAGED FILE: .xinitrc

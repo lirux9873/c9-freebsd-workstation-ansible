@@ -1,0 +1,8 @@
+---
+- name: Install scheduled Ansible Pull integration
+  ansible.builtin.import_tasks: install.yml
+  when: ansible_pull_enabled | bool
+
+- name: Remove scheduled Ansible Pull integration
+  ansible.builtin.import_tasks: remove.yml
+  when: not ansible_pull_enabled | bool

@@ -1,0 +1,6 @@
+---
+- name: Start baseline services
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: started
+  loop: "{{ base_services }}"

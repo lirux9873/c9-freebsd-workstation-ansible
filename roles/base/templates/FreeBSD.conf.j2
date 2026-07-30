@@ -1,0 +1,12 @@
+# BEGIN ANSIBLE MANAGED FILE: pkg/FreeBSD.conf
+# Manual changes will be overwritten.
+
+FreeBSD: {
+  url: "pkg+https://pkg.FreeBSD.org/${ABI}/{{ freebsd_package_branch }}",
+  mirror_type: "srv",
+  signature_type: "fingerprints",
+  fingerprints: "/usr/share/keys/pkg",
+  enabled: yes
+}
+
+# END ANSIBLE MANAGED FILE: pkg/FreeBSD.conf

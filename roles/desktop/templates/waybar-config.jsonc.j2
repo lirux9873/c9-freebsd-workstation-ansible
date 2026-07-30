@@ -1,0 +1,23 @@
+// BEGIN ANSIBLE MANAGED FILE: waybar/config
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": ["sway/workspaces", "sway/mode"],
+  "modules-center": ["clock"],
+  "modules-right": ["network", "cpu", "memory", "tray"],
+  "clock": {
+    "format": "{:%Y-%m-%d %H:%M}"
+  },
+  "cpu": {
+    "format": "CPU {usage}%"
+  },
+  "memory": {
+    "format": "MEM {}%"
+  },
+  "network": {
+    "format-ethernet": "{ifname} {ipaddr}",
+    "format-wifi": "{essid} {signalStrength}%",
+    "format-disconnected": "offline"
+  }
+}
+// END ANSIBLE MANAGED FILE: waybar/config

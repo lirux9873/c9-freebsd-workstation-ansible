@@ -1,0 +1,8 @@
+---
+hardware_profile: virtualbox
+hardware_kind: unknown
+hardware_packages: []
+hardware_kernel_modules: []
+hardware_services: []
+hardware_sysrc_settings: {}
+hardware_loader_settings: {}
