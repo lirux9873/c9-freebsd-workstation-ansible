@@ -5,10 +5,6 @@
 - name: Configure picom
   ansible.builtin.include_tasks: "dwm_picom.yml"
 
-- name: Install Dunst configuration
-  ansible.builtin.template:
-    src: dunstrc.j2
-    dest: "{{ workstation_home }}/.config/dunst/dunstrc"
-    owner: "{{ workstation_user }}"
-    group: "{{ workstation_user }}"
-    mode: "0644"
+- name: Configure dunst
+  ansible.builtin.include_tasks: "dwm_dunst.yml"  
+

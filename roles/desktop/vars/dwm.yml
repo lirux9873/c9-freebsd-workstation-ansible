@@ -7,7 +7,7 @@ desktop_packages:
   #- dwm
   - feh
   - picom
-  - sterm
+  #- sterm
   - xorg
 
 desktop_config_directories:
