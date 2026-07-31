@@ -9,11 +9,12 @@
       ansible.builtin.file:
         path: "{{ workstation_home }}/src"
         state: directory
+        owner: "{{ workstation_user }}"
+        group: "{{ workstation_user }}"
         mode: '0755'
       become: yes
-      become_user: "{{ workstation_user }}"
 
-    - name: Clone dwm-flexipatch repository
+    - name: Clone dwm-flexipatch repository as root
       ansible.builtin.git:
         repo: 'git@github.com:lirux9873/dwm-flexipatch.git'
         dest: "{{ workstation_home }}/src/dwm-flexipatch"
@@ -22,8 +23,18 @@
         clone: yes
         update: yes
       become: yes
-      become_user: "{{ workstation_user }}"
-  when: desktop_environment  == 'dwm'
+
+    - name: Ensure correct user ownership on cloned repo files
+      ansible.builtin.file:
+        path: "{{ workstation_home }}/src/dwm-flexipatch"
+        state: directory
+        recurse: yes
+        owner: "{{ workstation_user }}"
+        group: "{{ workstation_user }}"
+      become: yes
+
+  when: desktop_environment == 'dwm'
+
 
 - name: Install desktop packages
   ansible.builtin.package:
