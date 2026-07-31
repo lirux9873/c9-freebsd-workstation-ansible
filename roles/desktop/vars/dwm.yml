@@ -2,7 +2,7 @@
 desktop_start_command: startx
 
 desktop_packages:
-  - dmenu
+  #- dmenu
   - dunst
   #- dwm
   - feh
