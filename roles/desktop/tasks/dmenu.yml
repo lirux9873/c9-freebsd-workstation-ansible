@@ -1,0 +1,23 @@
+---
+- name: Clone private dmenu-flexipatch repository to system source
+  ansible.builtin.git:
+    repo: 'git@github.com:lirux9873/dmenu-flexipatch.git'
+    dest: "/usr/local/src/dmenu-flexipatch"
+    version: master
+    accept_hostkey: yes
+    # TODO: Use a dedicated key for this repository instead of borrowing the user's key
+    key_file: "{{ workstation_home }}/.ssh/id_ed25519"  # Borrowing the key to authenticate
+    clone: yes
+    update: yes
+
+- name: Clean and build dmenu using gmake
+  community.general.make:
+    chdir: "/usr/local/src/dmenu-flexipatch"
+    target: dist
+    make: gmake
+
+- name: Install dmenu using gmake
+  community.general.make:
+    chdir: "/usr/local/src/dmenu-flexipatch"
+    target: install
+    make: gmake

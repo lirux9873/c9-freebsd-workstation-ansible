@@ -42,6 +42,10 @@
   ansible.builtin.include_tasks: "st.yml"
   when: desktop_environment == 'dwm'
 
+- name: Install dmenu
+  ansible.builtin.include_tasks: "dmenu.yml"
+  when: desktop_environment == 'dwm'
+
 - name: Install fonts and icons for the desktop environment
   ansible.builtin.include_tasks: "fonts.yml"
   when: desktop_environment == 'dwm'
