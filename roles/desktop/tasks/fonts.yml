@@ -1,0 +1,14 @@
+---
+- name: Install fonts and icons for the desktop environment
+  community.general.pkgng:
+    name:
+      - x11-fonts/nerd-fonts     # Install the popular Nerd Fonts (including Hack/JetBrains)
+      - x11-fonts/font-awesome   # Provides the classic status bar icons
+      - x11-fonts/noto-emoji     # Offers emoji support (fallback)
+    state: present
+  register: font_installation
+
+- name: Update system-wide font cache
+  ansible.builtin.command: fc-cache -f -v
+  changed_when: true
+  when: font_installation.changed
