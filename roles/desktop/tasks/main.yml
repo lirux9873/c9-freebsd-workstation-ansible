@@ -30,7 +30,7 @@
       community.general.make:
         chdir: "/usr/local/src/dwm-flexipatch"
         target: clean install
-        executable: gmake
+        make: gmake
       #become: yes
 
   when: desktop_environment == 'dwm'
