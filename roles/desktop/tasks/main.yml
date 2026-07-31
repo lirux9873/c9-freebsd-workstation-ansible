@@ -12,7 +12,7 @@
         owner: root
         group: wheel
         mode: '0755'
-      become: yes
+      #become: yes
 
     - name: Clone private dwm-flexipatch repository to system source
       ansible.builtin.git:
@@ -24,14 +24,14 @@
         key_file: "{{ workstation_home }}/.ssh/id_ed25519"  # Borrowing the key to authenticate
         clone: yes
         update: yes
-      become: yes
+      #become: yes
 
     - name: Compile and Install dwm system-wide
       community.general.make:
         chdir: "/usr/local/src/dwm-flexipatch"
         target: clean install
         executable: gmake
-      become: yes
+      #become: yes
 
   when: desktop_environment == 'dwm'
 
