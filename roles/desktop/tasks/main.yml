@@ -38,7 +38,9 @@
 
   when: desktop_environment == 'dwm'
 
-
+- name: Install st
+  ansible.builtin.include_tasks: "st.yml"
+  when: desktop_environment == 'dwm'
 
 - name: Install desktop packages
   ansible.builtin.package:
