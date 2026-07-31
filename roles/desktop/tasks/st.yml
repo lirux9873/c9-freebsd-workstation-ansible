@@ -1,4 +1,12 @@
 ---
+# Prerequisite: 'pkgconf' is required by st-flexipatch to build the software.
+# This task ensures that 'pkgconf' is installed on FreeBSD systems before proceeding
+# with the installation of st-flexipatch.
+- name: Install pkgconf on FreeBSD
+  community.general.pkgng:
+    name: pkgconf
+    state: present
+
 - name: Clone private st-flexipatch repository to system source
   ansible.builtin.git:
     repo: 'git@github.com:lirux9873/st-flexipatch.git'
