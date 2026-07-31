@@ -1,0 +1,8 @@
+---
+- name: Install DWM X session
+  ansible.builtin.template:
+    src: xinitrc.j2
+    dest: "{{ workstation_home }}/.xinitrc"
+    owner: "{{ workstation_user }}"
+    group: "{{ workstation_user }}"
+    mode: "0755"

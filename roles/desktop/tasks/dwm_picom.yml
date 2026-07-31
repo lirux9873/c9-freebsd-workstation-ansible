@@ -1,0 +1,8 @@
+---
+- name: Install Picom configuration
+  ansible.builtin.template:
+    src: picom.conf.j2
+    dest: "{{ workstation_home }}/.config/picom/picom.conf"
+    owner: "{{ workstation_user }}"
+    group: "{{ workstation_user }}"
+    mode: "0644"

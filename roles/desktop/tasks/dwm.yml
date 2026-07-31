@@ -1,19 +1,9 @@
 ---
-- name: Install DWM X session
-  ansible.builtin.template:
-    src: xinitrc.j2
-    dest: "{{ workstation_home }}/.xinitrc"
-    owner: "{{ workstation_user }}"
-    group: "{{ workstation_user }}"
-    mode: "0755"
+- name: Configure x session for dwm
+  ansible.builtin.include_tasks: "dwm_xsession.yml"
 
-- name: Install Picom configuration
-  ansible.builtin.template:
-    src: picom.conf.j2
-    dest: "{{ workstation_home }}/.config/picom/picom.conf"
-    owner: "{{ workstation_user }}"
-    group: "{{ workstation_user }}"
-    mode: "0644"
+- name: Configure picom
+  ansible.builtin.include_tasks: "dwm_picom.yml"
 
 - name: Install Dunst configuration
   ansible.builtin.template:
