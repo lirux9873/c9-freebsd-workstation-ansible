@@ -1,0 +1,23 @@
+---
+- name: Clone private flexipatch-finalizer repository to system source
+  ansible.builtin.git:
+    repo: 'git@github.com:lirux9873/flexipatch-finalizer.git'
+    dest: "/usr/local/src/flexipatch-finalizer"
+    version: master
+    accept_hostkey: yes
+    # TODO: Use a dedicated key for this repository instead of borrowing the user's key
+    key_file: "{{ workstation_home }}/.ssh/id_ed25519"  # Borrowing the key to authenticate
+    clone: yes
+    update: yes
+
+- name: Change permissions of flexipatch-finalizer.sh
+  ansible.builtin.file:
+    path: /usr/local/src/flexipatch-finalizer/flexipatch-finalizer.sh
+    owner: root
+    group: wheel
+    mode: '0755'
+
+- name: Run custom script for each path in the list
+  ansible.builtin.command:
+    cmd: "/usr/local/src/flexipatch-finalizer/flexipatch-finalizer.sh -r -d /usr/local/src/{{ item }}"
+  loop: "{{ flexipatch_finalizer_items }}"

@@ -16,3 +16,8 @@ desktop_config_directories:
 
 desktop_services: []
 desktop_sysrc_settings: {}
+
+flexipatch_finalizer_items:
+  - dwm-flexipatch
+  - dmenu-flexipatch
+  - st-flexipatch
