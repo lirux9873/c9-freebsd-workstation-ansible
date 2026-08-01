@@ -19,5 +19,5 @@
 
 - name: Run custom script for each path in the list
   ansible.builtin.command:
-    cmd: "/usr/local/src/flexipatch-finalizer/flexipatch-finalizer.sh -r -d /usr/local/src/{{ item }}"
+    cmd: "/usr/local/src/flexipatch-finalizer/flexipatch-finalizer.sh -r -d /usr/local/src/{{ item }} -o /usr/local/src/{{ item }}/finalized"
   loop: "{{ flexipatch_finalizer_items }}"
